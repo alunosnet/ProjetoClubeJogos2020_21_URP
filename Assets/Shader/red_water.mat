@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_water_urp
+  m_Name: red_water
   m_Shader: {fileID: -6465566751694194690, guid: c58cab1882120104ca92074e4862c6eb,
     type: 3}
   m_ShaderKeywords: 
@@ -25,5 +25,5 @@ Material:
     - Vector1_EE156BE9: 5
     - Vector1_FC41F876: 1
     m_Colors:
-    - Color_6EAB6BD1: {r: 0, g: 0.80784315, b: 1.3647059, a: 0}
-    - Color_D4EC8104: {r: 0.19215685, g: 0.33860853, b: 0.67058825, a: 0}
+    - Color_6EAB6BD1: {r: 1.0485034, g: 1.0240413, b: 1.0237745, a: 0}
+    - Color_D4EC8104: {r: 0.8867924, g: 0.0292809, b: 0.037352454, a: 0}

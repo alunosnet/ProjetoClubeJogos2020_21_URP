@@ -70,16 +70,23 @@ public class PlayerMove : MonoBehaviour
         _characterController.Move(novaPosicao * Time.deltaTime);
         playerJump.playerGrounded = _characterController.isGrounded;
 
-        if (RodarComTeclado == false)
+        if (RodarComTeclado == false && inputRodar!=0 && inputAndar==0)
         {
-            novaPosicao = transform.right * velocidadeRodar * inputRodar;
+            novaPosicao = transform.right * velocidadeAndar * inputRodar;
             _characterController.Move(novaPosicao * Time.deltaTime);
+            if (inputRodar > 0) _animator.SetBool("rightwalk",true);
+            if (inputRodar < 0) _animator.SetBool("leftwalk",true);
+            //_animator.SetFloat("velocidadelateral", inputRodar);
         }
         else
         {
             _characterController.transform.Rotate(_characterController.transform.up * velocidadeRodar * inputRodar);
         }
-
+        if(inputRodar==0 || inputAndar != 0)
+        {
+            _animator.SetBool("rightwalk", false);
+            _animator.SetBool("leftwalk", false);
+        }
         if (_animator != null) _animator.SetFloat("velocidade", inputAndar+(inputAndar*inputSprint));
         
     }
