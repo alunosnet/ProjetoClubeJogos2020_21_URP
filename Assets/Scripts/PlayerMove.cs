@@ -10,6 +10,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]
     float velocidadeRodar = 5;
     [SerializeField]
+    float velocidadeAndarTras = 2;
+    [SerializeField]
     bool RodarComTeclado = true;
     [SerializeField]
     float speedFactor = 1.5f;
@@ -18,16 +20,16 @@ public class PlayerMove : MonoBehaviour
     float inputAndar;
     float inputRodar;
     float inputSprint;
+    float Andar;
 
     PlayerJump playerJump;
     private Vector3 hitNormal;
     public float slideFriction = 0.3f;
-
     // Start is called before the first frame update
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren<Animator>();
         playerJump = GetComponent<PlayerJump>();
     }
     private void OnControllerColliderHit(ControllerColliderHit hit)
@@ -42,13 +44,18 @@ public class PlayerMove : MonoBehaviour
         inputRodar = CrossPlatformInputManager.GetAxis("Horizontal");
         inputSprint = CrossPlatformInputManager.GetAxis("Fire3");
 
-        inputAndar = velocidadeAndar * inputAndar + (velocidadeAndar * inputSprint);
+        if (inputAndar <= 0)
+        {
+            Andar = velocidadeAndarTras * inputAndar;
+        }
+        else
+            Andar = velocidadeAndar * inputAndar + (velocidadeAndar * inputSprint);
 
-        Vector3 novaPosicao = transform.forward *inputAndar;
-       // novaPosicao.y += Physics.gravity.y;
+        Vector3 novaPosicao = transform.forward * Andar;
+       
         //deslizar
         float angulo = Vector3.Angle(Vector3.up, hitNormal);
-        //Debug.Log("Slide slop " + angulo);
+        
         if (angulo > _characterController.slopeLimit)// && angulo < 45)
         {
             novaPosicao = transform.forward;
@@ -73,6 +80,7 @@ public class PlayerMove : MonoBehaviour
             _characterController.transform.Rotate(_characterController.transform.up * velocidadeRodar * inputRodar);
         }
 
-        if(_animator!=null) _animator.SetFloat("velocidade", inputAndar);
+        if (_animator != null) _animator.SetFloat("velocidade", inputAndar+(inputAndar*inputSprint));
+        
     }
 }
